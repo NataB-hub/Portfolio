@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block content_head %}
+        {{ res.text }}
+    <div class="date-right">
+        {{ date }}
+    </div>
+{% endblock %}
+{% block content %}
+    {% for blog in blogs %}
+        <h1><a href="{% url blog.ref_name %}"> {{ blog.title }} </a><a href="{{ blog.url }}" target="_blank"><img src="/static/github_PNG83.png" width="5%"></a></h1>
+            <div class="date">
+                     <p>{{ blog.published_date }}</p>
+            </div>
+                <p>{{ blog.text|linebreaksbr }}</p>
+    {% endfor %}
+{% endblock %}
