@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% block content_head %}
+<div>
+    {% if user.is_authenticated %}
+            <a href="{% url 'post_new' %}" class="top-menu"><span class="glyphicon-plus"></span> </a>
+            <a href="{% url 'post_draft_list' %}" class="top-menu"><span class="glyphicon glyphicon-edit"></span></a>
+            Привет, {{ user.username }}<small>(<a href="{% url 'logout' %}">Выйти</a>)</small>
+    {% else %}
+            <a href="{% url 'login' %}" class="top-menu"><span class="glyphicon glyphicon-lock"></span></a>
+    {% endif %}
+</div>
+<div>
+        <a href="{% url 'post_list' %}">Вернуться к списку новостей</a>
+</div>
+{% endblock %}
+{% block content %}
+{% for post in posts %}
+    <div class="post">
+        <div class="date">
+            {{ post.published_date }}
+            </div>
+            <h1><a href="{% url 'post_detail' pk=post.pk %}?frompage={{ posts.number }}">{{ post.title }}</a></h1>
+            <p>{{ post.text|linebreaksbr }}</p>
+            <a href="{% url 'post_detail' pk=post.pk %}">Комментарии: {{ post.approved_comments.count }}</a>
+    </div>
+{% endfor %}
+
+<div class="pagination">
+    <span class="step-links">
+        {% if posts.has_previous %}
+            <a href="?page=1">начало</a>
+            <a href="?page={{ posts.previous_page_number }}">предыдущая</a>
+        {% endif %}
+
+        <span class="current">
+            Страница {{ posts.number }} из {{ posts.paginator.num_pages }}.
+        </span>
+
+        {% if posts.has_next %}
+            <a href="?page={{ posts.next_page_number }}">следующая</a>
+            <a href="?page={{ posts.paginator.num_pages }}">последняя</a>
+        {% endif %}
+    </span>
+</div>
+{% endblock %}
