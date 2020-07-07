@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block content_head %}
+Прогноз погоды в вашем городе
+{% endblock %}
+{% block content %}
+<form action="" method="post">
+    {% csrf_token %}
+    <label for="city">Город</label>
+    <input type="text" name="city" placeholder="Введите город">
+    <input type="submit" name="send" value="Узнать">
+</form>
+{% if city %}
+    <h2>Город: {{ city }}</h2>
+    {% for one_day in forecasts %}
+        <div class="day">Дата: {{ one_day.day }}</div>
+        <table class="weatherdata">
+            <tr><th>Час</th><th>Погода</th><th>Температура</th><th>Скорость ветра </th><th>Облачность </th></tr>
+             {% for one_hour in one_day.hours %}
+                <tr><td>{{ one_hour.hour }}</td><td><img src="https://openweathermap.org/img/w/{{ one_hour.icon }}.png" alt="Фото погоды">{{ one_hour.weather }}</td><td>{{ one_hour.temperature }}<sup>o</sup>C</td><td>{{ one_hour.wind }}м/с</td><td>{{ one_hour.clouds }}%</td></tr>
+             {% endfor %}
+        </table>
+    {% endfor %}
+{% endif %}
+{% endblock %}

@@ -22,6 +22,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('main_list.urls')),
     path('', include('blog.urls')),
+    path('', include('weather.urls')),
     path('accounts/login/', views.LoginView.as_view(), name='login'),
     path('accounts/logout/', views.LogoutView.as_view(next_page='/post_list/'), name='logout'),
 ]
