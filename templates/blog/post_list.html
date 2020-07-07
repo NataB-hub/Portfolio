@@ -2,15 +2,14 @@
 {% block content_head %}
 <div>
     {% if user.is_authenticated %}
+    {% if perms.blog.add_post %}
             <a href="{% url 'post_new' %}" class="top-menu"><span class="glyphicon-plus"></span> </a>
+    {% endif %}
             <a href="{% url 'post_draft_list' %}" class="top-menu"><span class="glyphicon glyphicon-edit"></span></a>
             Привет, {{ user.username }}<small>(<a href="{% url 'logout' %}">Выйти</a>)</small>
     {% else %}
             <a href="{% url 'login' %}" class="top-menu"><span class="glyphicon glyphicon-lock"></span></a>
     {% endif %}
-</div>
-<div>
-        <a href="{% url 'post_list' %}">Вернуться к списку новостей</a>
 </div>
 {% endblock %}
 {% block content %}

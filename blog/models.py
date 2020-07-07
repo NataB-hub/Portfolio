@@ -35,3 +35,10 @@ class Comment(models.Model):
 
     def __str__(self):
         return self.text
+
+class USCitizen(models.Model):
+    class Meta:
+        permissions = (
+            # Идентификатор права       Описание права
+            ("can_publish",               "Может публиковать новость"),
+        )

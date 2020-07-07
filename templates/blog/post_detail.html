@@ -2,12 +2,17 @@
 {% block content_head %}
 <div>
     {% if user.is_authenticated %}
+    {% if perms.blog.add_post %}
             <a href="{% url 'post_new' %}" class="top-menu"><span class="glyphicon-plus"></span> </a>
+    {% endif %}
             <a href="{% url 'post_draft_list' %}" class="top-menu"><span class="glyphicon glyphicon-edit"></span></a>
+            Привет, {{ user.username }}<small>(<a href="{% url 'logout' %}">Выйти</a>)</small>
+    {% else %}
+            <a href="{% url 'login' %}" class="top-menu"><span class="glyphicon glyphicon-lock"></span></a>
     {% endif %}
 </div>
 <div>
-        <a href="{% url 'post_list' %}?page={{ pn }}">Вернуться к списку новостей</a>
+        <a href="{% url 'post_list' %}">Вернуться к списку новостей</a>
 </div>
 {% endblock %}
 {% block content %}
@@ -21,10 +26,16 @@
                         {{ post.published_date }}
                     </div>
                 {% else %}
+                {% if perms.blog.can_publish %}
                     <a class="btn btn-default" href="{% url 'post_publish' pk=post.pk %}">Опубликовать</a>
                 {% endif %}
-                <a class="btn btn-default" href="{% url 'post_edit' pk=post.pk %}"><span class="glyphicon glyphicon-pencil"></span></a>
-                <a class="btn btn-default" href="{% url 'post_remove' pk=post.pk%}"><span class="glyphicon glyphicon-remove"></span></a>
+                {% endif %}
+                {% if perms.blog.change_post %}
+                    <a class="btn btn-default" href="{% url 'post_edit' pk=post.pk %}"><span class="glyphicon glyphicon-pencil"></span></a>
+                {% endif %}
+                {% if perms.blog.delete_post %}
+                    <a class="btn btn-default" href="{% url 'post_remove' pk=post.pk%}"><span class="glyphicon glyphicon-remove"></span></a>
+                {% endif %}
             {% endif %}
         </div>
         </header>

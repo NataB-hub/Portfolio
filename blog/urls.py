@@ -1,5 +1,6 @@
 from django.urls import path
 from blog import views
+from django.contrib.auth.decorators import permission_required
 
 urlpatterns = [
     path('post_list/', views.post_list, name='post_list'),
