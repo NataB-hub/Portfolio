@@ -11,7 +11,7 @@ def weather(request):
 
     params = {  # перечисляем нужные параметры для URL
         'q': city,
-        'appid': 'db02454d60b8de925a9520dd20a48322',
+        'appid': '**',
         'units': 'metric',
         'lang': 'ru',
     }
